@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Budget Tracker</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div id="content-left">
+        <h1 id="title-left">Budget Calculator</h1>
+        <form>
+            <div class="form-group">
+                <label for="budget-input" class="mr-2">Monthly Budget</label>
+                <input type="number" min="0" placeholder="Enter Budget" id="budget-input" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-budget">Submit</button>
+        </form>
+        <br>
+        <form>
+            <div class="form-group">
+                <label for="expense-input" class="mr-2">Expense Amount</label>
+                <input type="number" min="0" placeholder="Enter Amount" id="expense-input" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="expense-name-input" class="mr-2">Expense Name</label>
+                <input type="text" placeholder="Enter name" id="expense-name-input" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-expense">Submit</button>
+        </form>
+    </div>
+
+    <div id="content-right">
+        <h1 id="title-right">Results</h1>
+        <div class="row">
+            <div class="col">
+                <h6>Budget:</h6>
+            </div>
+            <div class="col">
+                <h6>+$1000</h6>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6>Food:</h6>
+            </div>
+            <div class="col">
+                <h6>-$100</h6>
+            </div>
+            <div class="col">
+                <form class="form-group">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <h4>Left Over: $900</h4>
+    </div>
+</div>
+</body>
+<script src="app.js" charset="utf-8"></script>
+</html>
