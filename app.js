@@ -1,4 +1,6 @@
-// Expense Class
+// Budget Calculator Code, there is an expense and budget class, along with a store and UI class.
+// The store class manages localStorage and the UI manages updating the UI. At the bottom are the form functions to
+// handle form inputs/submissions.
 
 class Expense {
     constructor(amount, name) {
@@ -6,15 +8,16 @@ class Expense {
         this.name = name;
     }
 }
-// Budget Class (just 1 thing)
+
 class Budget {
     constructor(amount) {
         this.amount = amount;
     }
 }
 
-// UI Class
+// UI Class to handle showing the budget and expenses to the user, along with alerts and updating info.
 class UI {
+    // get displayBudget from Store and add it
     static displayBudget() {
         let budget = Store.getBudget()
 
@@ -23,6 +26,7 @@ class UI {
         }
     }
 
+    // Loop through all expenses fetched from Store and add them via calling another function.
     static displayExpenses() {
         let expenses = Store.getExpenses();
         expenses.forEach(expense => {
@@ -31,11 +35,14 @@ class UI {
 
     }
 
+    // Take in budget object and insert into HTML code
     static addBudget(budget) {
         let list = document.querySelector("#row-budget");
+        // Manipulating DOM to update budget
         list.firstElementChild.nextElementSibling.firstElementChild.textContent = `+$${budget.amount}`;
     }
 
+    // Take in an expense object, make an HTML template and insert it
     static addExpense(expense) {
         let list = document.querySelector("#row-budget").parentNode;
         const budgetRow = document.createElement('div');
@@ -55,6 +62,7 @@ class UI {
 
     }
 
+    // Shows alerts at top of screen that fade after 3 seconds. Content and alert type are passed in.
     static showAlert(message, alertType) {
         const div = document.createElement('div')
         div.className = `alert alert-${alertType}`;
@@ -64,6 +72,7 @@ class UI {
         setTimeout(() => document.querySelector('.alert').remove(), 3000);
     }
 
+    // Calculate the total (budget - expenses) and update it in the DOM
     static displayResult() {
         let total = 0;
         let budget = Store.getBudget()
@@ -76,20 +85,18 @@ class UI {
 
             if (total >= 0) {
                 document.querySelector("#total").textContent = `Total: +$${total}`;
-
-            } else if (total < 0) {
-                total = Math.abs(total);
-                document.querySelector("#total").textContent = `Total: -$${total}`;
-
             }
-
+            else if (total < 0) {
+                total = Math.abs(total);  // Absolute value so we can move the minus symbol out of the way
+                document.querySelector("#total").textContent = `Total: -$${total}`;
+            }
         }
-
-
     }
 }
 
+// Store class sends/receives objects and takes them out or puts them into localStorage
 class Store {
+    // Creates undefined budget if there is none, and returns the budget object
     static getBudget() {
         let budget;
         if (localStorage.getItem('budget') === null) {
@@ -101,11 +108,13 @@ class Store {
         return budget;
     }
 
+    // put budget object into the localStorage
     static addBudget(budget) {
         localStorage.setItem('budget', JSON.stringify(budget));
 
     }
 
+    // return list of expense objects (list empty if none)
     static getExpenses() {
         let expenses;
         if (localStorage.getItem('expenses') === null) {
@@ -117,6 +126,7 @@ class Store {
         return expenses;
     }
 
+    // gets expenses, loops through and removes from list, then stores back into localStorage
     static removeExpense(name) {
         const expenses = Store.getExpenses();
 
@@ -129,49 +139,48 @@ class Store {
         localStorage.setItem('expenses', JSON.stringify(expenses));
     }
 
+    // gets expenses, adds expense and puts it back into localStorage
     static addExpense(expense) {
         const expenses = Store.getExpenses();
         expenses.push(expense);
         localStorage.setItem('expenses', JSON.stringify(expenses));
     }
-
-
 }
 
+// Clear all input in the forms and set to ""
 function clearInput () {
     document.querySelector("#budget-input").value = "";
     document.querySelector("#expense-input").value = "";
     document.querySelector("#expense-name-input").value = "";
 }
 
+// On load set up UI
 document.addEventListener("DOMContentLoaded", UI.displayBudget);
 document.addEventListener("DOMContentLoaded", UI.displayExpenses);
 document.addEventListener("DOMContentLoaded", UI.displayResult);
 
+// updates budget from form input
 document.querySelector("#form-budget").addEventListener("submit", (e) => {
     e.preventDefault();
     const amount = document.querySelector("#budget-input").value;
-
     const budget = new Budget(amount);
 
     UI.addBudget(budget);
-
-
     Store.addBudget(budget);
-
     UI.displayResult();
-
     clearInput();
-    UI.showAlert("Budget added", "success");
 
+    UI.showAlert("Budget added", "success");
 })
 
+// Validates input and adds expense from form submission
 document.querySelector("#form-expense").addEventListener("submit", (e) => {
     e.preventDefault();
 
     const amount = document.querySelector("#expense-input").value;
     const name = document.querySelector("#expense-name-input").value;
 
+    // Check if expense already is named the same as existing expense
     let expenses = Store.getExpenses();
     let errorBool = false
     expenses.forEach(expense => {
@@ -180,56 +189,30 @@ document.querySelector("#form-expense").addEventListener("submit", (e) => {
             errorBool = true
         }
     });
+
+    // Passed, is valid input
     if (errorBool === false) {
         const expense = new Expense(amount, name);
 
         UI.addExpense(expense);
-
-
         Store.addExpense(expense);
-
         UI.displayResult();
-
         clearInput();
+
         UI.showAlert("Expense added", "success");
     }
-
-
 })
 
-
+// Check for deletion, if the target is the delete button, then delete that expense
 document.querySelector("#content-right").firstElementChild.addEventListener('click', (e) => {
     if (e.target.className === "btn btn-danger btn-sm") {
         e.target.parentNode.parentNode.remove();
+        // Traverse DOM to get the name of the expense (needed as input to Store.removeExpense)
         let expenseName = e.target.parentNode.parentNode.firstElementChild.firstElementChild.textContent;
+
         Store.removeExpense(expenseName);
         UI.displayResult();
+
         UI.showAlert("Removed Expense", "success");
-
     }
-
 });
-
-
-// const ex_expense = new Expense(500, "Food");
-// const ex_budget = new Budget(1000);
-// UI.addBudget(ex_budget);
-// UI.addExpense(ex_expense);
-
-// displayResult (displays expenses + budget) by calling localStorage
-// addBudget (if there is already a budget just replace it)
-// addExpense
-// deleteExpense
-// deleteBudget (optional)
-// showAlert (for form validation and also success)
-
-// Store Class (localStorage)
-// getResult load results from local storage
-// addResult (save expense or budget into localStorage)
-// removeResult (remove expense or budget)
-
-// Events
-// Display result
-// Add result
-// Remove result
-
