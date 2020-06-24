@@ -9,10 +9,13 @@
     <title>Budget Tracker</title>
 </head>
 <body>
+<div id="warning-box">
+
+</div>
 <div class="container-fluid">
     <div id="content-left">
         <h1 id="title-left">Budget Calculator</h1>
-        <form>
+        <form id="form-budget">
             <div class="form-group">
                 <label for="budget-input" class="mr-2">Monthly Budget</label>
                 <input type="number" min="0" placeholder="Enter Budget" id="budget-input" class="form-control">
@@ -20,7 +23,7 @@
             <button type="submit" class="btn btn-primary" id="btn-budget">Submit</button>
         </form>
         <br>
-        <form>
+        <form id="form-expense">
             <div class="form-group">
                 <label for="expense-input" class="mr-2">Expense Amount</label>
                 <input type="number" min="0" placeholder="Enter Amount" id="expense-input" class="form-control">
@@ -34,33 +37,35 @@
     </div>
 
     <div id="content-right">
-        <h1 id="title-right">Results</h1>
-        <div class="row">
-            <div class="col">
-                <h6>Budget:</h6>
-            </div>
-            <div class="col">
-                <h6>+$1000</h6>
-            </div>
-            <div class="col">
+        <div>
+            <h1 id="title-right">Results</h1>
+            <div class="row" id="row-budget">
+                <div class="col">
+                    <h6>Budget:</h6>
+                </div>
+                <div class="col">
+                    <h6></h6>
+                </div>
+                <div class="col">
 
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h6>Food:</h6>
-            </div>
-            <div class="col">
-                <h6>-$100</h6>
-            </div>
-            <div class="col">
-                <form class="form-group">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </div>
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <h6>Food:</h6>-->
+<!--                </div>-->
+<!--                <div class="col">-->
+<!--                    <h6></h6>-->
+<!--                </div>-->
+<!--                <div class="col">-->
+<!--                    <form class="form-group">-->
+<!--                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
         <hr>
-        <h4>Left Over: $900</h4>
+        <h4 id="total">Total: </h4>
     </div>
 </div>
 </body>
