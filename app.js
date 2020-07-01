@@ -77,20 +77,23 @@ class UI {
         let total = 0;
         let budget = Store.getBudget()
         if (budget !== undefined) {
-            total += budget.amount;
-            let expenses = Store.getExpenses();
-            expenses.forEach(expense => {
-                total -= expense.amount;
-            });
-
-            if (total >= 0) {
-                document.querySelector("#total").textContent = `Total: +$${total}`;
-            }
-            else if (total < 0) {
-                total = Math.abs(total);  // Absolute value so we can move the minus symbol out of the way
-                document.querySelector("#total").textContent = `Total: -$${total}`;
-            }
+            total = budget.amount;
         }
+        let expenses = Store.getExpenses();
+        expenses.forEach(expense => {
+            total -= expense.amount;
+            total = parseInt(total)
+            console.log(total)
+        });
+
+        if (total >= 0) {
+            document.querySelector("#total").textContent = `Total: +$${total}`;
+        }
+        else if (total < 0) {
+            total = Math.abs(total);  // Absolute value so we can move the minus symbol out of the way
+            document.querySelector("#total").textContent = `Total: -$${total}`;
+        }
+
     }
 }
 
