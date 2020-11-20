@@ -34,15 +34,40 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
+/* For alerts */
 .alert {
-    animation-name: fadeAlert;
-    animation-duration: 3s;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #eed3d7;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0px;
+    right: 21px;
+    /* Each alert has its own width */
+    float: right;
+    clear: right;
+    background-color: white;
 }
 
-@keyframes fadeAlert {
-    0% {opacity: 100;}
-    50% {opacitY: 100;}
-    100% {opacity: 0;}
+.alert-red {
+    color: white;
+    background-color: #DA4453;
+}
+.alert-green {
+    color: white;
+    background-color: #37BC9B;
+}
+.alert-blue {
+    color: white;
+    background-color: #4A89DC;
+}
+.alert-yellow {
+    color: white;
+    background-color: #F6BB42;
+}
+.alert-orange {
+    color:white;
+    background-color: #E9573F;
 }
 
 #content-left {

@@ -63,13 +63,9 @@ class UI {
     }
 
     // Shows alerts at top of screen that fade after 3 seconds. Content and alert type are passed in.
-    static showAlert(message, alertType) {
-        const div = document.createElement('div')
-        div.className = `alert alert-${alertType}`;
-        div.appendChild(document.createTextNode(message));
-        const warningBox = document.querySelector("#warning-box");
-        warningBox.appendChild(div);
-        setTimeout(() => document.querySelector('.alert').remove(), 3000);
+    static showAlert(message, color) {
+        ohSnapX()
+        ohSnap(message, {color: color, 'duration': '2500'});
     }
 
     // Calculate the total (budget - expenses) and update it in the DOM
@@ -173,7 +169,7 @@ document.querySelector("#form-budget").addEventListener("submit", (e) => {
     UI.displayResult();
     clearInput();
 
-    UI.showAlert("Budget added", "success");
+    UI.showAlert("Budget added", "green");
 })
 
 // Validates input and adds expense from form submission
@@ -188,7 +184,7 @@ document.querySelector("#form-expense").addEventListener("submit", (e) => {
     let errorBool = false
     expenses.forEach(expense => {
         if (expense.name === name) {
-            UI.showAlert("Expense must have different name", "danger");
+            UI.showAlert("Expense must have different name", "red");
             errorBool = true
         }
     });
@@ -202,7 +198,7 @@ document.querySelector("#form-expense").addEventListener("submit", (e) => {
         UI.displayResult();
         clearInput();
 
-        UI.showAlert("Expense added", "success");
+        UI.showAlert("Expense added", "green");
     }
 })
 
@@ -216,6 +212,6 @@ document.querySelector("#content-right").firstElementChild.addEventListener('cli
         Store.removeExpense(expenseName);
         UI.displayResult();
 
-        UI.showAlert("Removed Expense", "success");
+        UI.showAlert("Removed Expense", "green");
     }
 });
